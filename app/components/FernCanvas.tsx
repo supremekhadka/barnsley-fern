@@ -11,6 +11,8 @@ const FernCanvas = () => {
   const [point, setPoint] = useState(math.matrix([[1], [1]]));
   const [points, setPoints] = useState<MathType[]>([point]);
   const [scale, setScale] = useState(52.5);
+  const [rangeScale, setRangeScale] = useState(52.5);
+  const [rangeIteration, setRangeIteration] = useState(100);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -159,31 +161,39 @@ const FernCanvas = () => {
           className="flex flex-col justify-start items-start gap-5"
           onSubmit={handleSubmit}
         >
-          <div className="flex flex-col gap-2 justify-start items-start">
+          <div className="flex flex-col gap-1 justify-start items-start">
             <label htmlFor="range-iterations" className="text-white">
               Iterations:
             </label>
-            <input
-              type="range"
-              name="iterations"
-              min={100}
-              max={10000}
-              defaultValue={iteration}
-              id="range-iterations"
-            />
+            <div className="flex items-center gap-2">
+              <input
+                type="range"
+                name="iterations"
+                min={100}
+                max={10000}
+                defaultValue={iteration}
+                id="range-iterations"
+                onChange={(e) => setRangeIteration(Number(e.target.value))}
+              />
+              <span>{rangeIteration}</span>
+            </div>
           </div>
-          <div className="flex flex-col justify-start items-start gap-2">
+          <div className="flex flex-col justify-start items-start gap-1">
             <label htmlFor="range-scale" className="text-white">
               Scale:
             </label>
-            <input
-              type="range"
-              name="scale"
-              min={2.5}
-              max={102.5}
-              defaultValue={scale}
-              id="range-scale"
-            />
+            <div className="flex items-center gap-2">
+              <input
+                type="range"
+                name="scale"
+                min={2.5}
+                max={102.5}
+                defaultValue={scale}
+                id="range-scale"
+                onChange={(e) => setRangeScale(Number(e.target.value))}
+              />
+              <span>{rangeScale - 2.5}%</span>
+            </div>
           </div>
           <input type="submit" value="Submit" />
         </form>
