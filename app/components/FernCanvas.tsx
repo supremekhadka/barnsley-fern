@@ -1,15 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { create, all, MathType, isDenseMatrix } from "mathjs";
 
 const config = {};
 const math = create(all, config);
 
 const FernCanvas = () => {
-  const [iteration, setIteration] = useState(5);
+  const [iteration, setIteration] = useState(5000);
   const [point, setPoint] = useState(math.matrix([[1], [1]]));
   const [points, setPoints] = useState<MathType[]>([point]);
+
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const f1 = (P: MathType) => {
     return math.add(
@@ -89,21 +91,40 @@ const FernCanvas = () => {
     performIterations(iteration);
   }, [iteration]);
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Draw points
+        points.forEach((point) => {
+          if (point && isDenseMatrix(point)) {
+            const pointArray = point.toArray() as number[][];
+            const x = pointArray[0][0] * 100;
+            const y = pointArray[1][0] * 100;
+            ctx.fillStyle = "green";
+            ctx.fillRect(x + canvas.width / 2, -y + canvas.height, 2, 2); // Centering the point
+          }
+        });
+      }
+    }
+  }, [points]);
+
   return (
     <>
-      {points.map((point, index) => {
-        // Check if point is a DenseMatrix by checking its properties
-        if (point && isDenseMatrix(point)) {
-          const pointArray = point.toArray() as number[][];
-          return (
-            <div key={index}>
-              X: {pointArray[0][0]}, Y: {pointArray[1][0]}{" "}
-              {/* Display the coordinates */}
-            </div>
-          );
-        }
-        return null; // Return null if point is not a DenseMatrix
-      })}
+      <canvas
+        ref={canvasRef}
+        width={600}
+        height={600}
+        style={{
+          border: "1px solid black",
+          borderRadius: "35px",
+          backgroundColor: "#1b1b1b",
+          zIndex: "0",
+        }}
+      />
     </>
   );
 };
