@@ -117,7 +117,7 @@ const FernCanvas = () => {
 
             ctx.beginPath();
             ctx.arc(
-              x + canvas.width / 2,
+              x + canvas.width / 2 - 25,
               -y + canvas.height,
               0.5,
               0,
