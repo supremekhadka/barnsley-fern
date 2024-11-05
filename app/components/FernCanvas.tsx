@@ -13,6 +13,14 @@ const FernCanvas = () => {
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
+  const colorPalette: { [key: number]: string } = {
+    1: "#61b3ff",
+    2: "#210a7f",
+    3: "#0588da",
+    4: "#0bcc31",
+    5: "#21fd2b",
+  };
+
   const f1 = (P: MathType) => {
     return math.add(
       math.multiply(
@@ -80,7 +88,6 @@ const FernCanvas = () => {
           const transformation = chooseTransformation();
           const newPoint = transformation(prevPoint);
           setPoints((prevPoints) => [...prevPoints, newPoint]);
-          console.log(newPoint);
 
           return newPoint;
         });
@@ -102,10 +109,10 @@ const FernCanvas = () => {
         points.forEach((point) => {
           if (point && isDenseMatrix(point)) {
             const pointArray = point.toArray() as number[][];
-            const x = pointArray[0][0] * 100;
-            const y = pointArray[1][0] * 100;
-            ctx.fillStyle = "green";
-            ctx.fillRect(x + canvas.width / 2, -y + canvas.height, 2, 2); // Centering the point
+            const x = pointArray[0][0] * 57.5;
+            const y = pointArray[1][0] * 57.5;
+            ctx.fillStyle = colorPalette[math.randomInt(1, 6)];
+            ctx.fillRect(x + canvas.width / 2, -y + canvas.height, 2, 2);
           }
         });
       }
