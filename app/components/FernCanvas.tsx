@@ -7,19 +7,12 @@ const config = {};
 const math = create(all, config);
 
 const FernCanvas = () => {
-  const [iteration, setIteration] = useState(5000);
+  const [iteration, setIteration] = useState(0);
   const [point, setPoint] = useState(math.matrix([[1], [1]]));
   const [points, setPoints] = useState<MathType[]>([point]);
+  const [scale, setScale] = useState(52.5);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  const colorPalette: { [key: number]: string } = {
-    1: "#61b3ff",
-    2: "#210a7f",
-    3: "#0588da",
-    4: "#0bcc31",
-    5: "#21fd2b",
-  };
 
   const f1 = (P: MathType) => {
     return math.add(
@@ -99,6 +92,14 @@ const FernCanvas = () => {
   }, [iteration]);
 
   useEffect(() => {
+    const colorPalette: { [key: number]: string } = {
+      1: "#61b3ff",
+      2: "#210a7f",
+      3: "#0588da",
+      4: "#0bcc31",
+      5: "#21fd2b",
+    };
+
     const canvas = canvasRef.current;
     if (canvas) {
       const ctx = canvas.getContext("2d");
@@ -109,29 +110,84 @@ const FernCanvas = () => {
         points.forEach((point) => {
           if (point && isDenseMatrix(point)) {
             const pointArray = point.toArray() as number[][];
-            const x = pointArray[0][0] * 57.5;
-            const y = pointArray[1][0] * 57.5;
+            const x = pointArray[0][0] * scale;
+            const y = pointArray[1][0] * scale;
+
+            ctx.beginPath();
+            ctx.arc(
+              x + canvas.width / 2,
+              -y + canvas.height,
+              0.5,
+              0,
+              2 * Math.PI
+            );
             ctx.fillStyle = colorPalette[math.randomInt(1, 6)];
-            ctx.fillRect(x + canvas.width / 2, -y + canvas.height, 2, 2);
+            // ctx.fillRect(x + canvas.width / 2, -y + canvas.height, 2, 2);
+            ctx.fill();
+            ctx.closePath();
           }
         });
       }
     }
-  }, [points]);
+  }, [points, scale]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const newIterations = Number(formData.get("iterations"));
+    const newScale = Number(formData.get("scale"));
+
+    setIteration(newIterations);
+    setScale(newScale);
+  };
 
   return (
     <>
-      <canvas
-        ref={canvasRef}
-        width={600}
-        height={600}
-        style={{
-          border: "1px solid black",
-          borderRadius: "35px",
-          backgroundColor: "#1b1b1b",
-          zIndex: "0",
-        }}
-      />
+      <div className="flex justify-center items-center gap-10">
+        <canvas
+          ref={canvasRef}
+          width={550}
+          height={550}
+          style={{
+            borderRadius: "35px",
+            backgroundColor: "#141414",
+            zIndex: "0",
+          }}
+        />
+        <form
+          className="flex flex-col justify-start items-start gap-5"
+          onSubmit={handleSubmit}
+        >
+          <div className="flex flex-col gap-2 justify-start items-start">
+            <label htmlFor="range-iterations" className="text-white">
+              Iterations:
+            </label>
+            <input
+              type="range"
+              name="iterations"
+              min={100}
+              max={10000}
+              defaultValue={iteration}
+              id="range-iterations"
+            />
+          </div>
+          <div className="flex flex-col justify-start items-start gap-2">
+            <label htmlFor="range-scale" className="text-white">
+              Scale:
+            </label>
+            <input
+              type="range"
+              name="scale"
+              min={2.5}
+              max={102.5}
+              defaultValue={scale}
+              id="range-scale"
+            />
+          </div>
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
     </>
   );
 };

@@ -5,7 +5,7 @@ const page = () => {
   return (
     <>
       <main className="flex flex-col min-h-screen justify-center items-center w-full">
-        Barnsley Fern Fractals
+        <h1 className="text-2xl font-semibold my-10">Barnsley Fern Fractals</h1>
         <FernCanvas />
       </main>
     </>
