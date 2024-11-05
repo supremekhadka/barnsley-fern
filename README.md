@@ -6,12 +6,12 @@ The Barnsley fern is a well-known fractal that mimics the appearance of a natura
 
 ## Affine Transformations / Functions and Corresponding Probabilities
 
-| Transformation | Matrix                                           | Translation             | Probability |
-|----------------|--------------------------------------------------|-------------------------|-------------|
-| \( f_1 \)      | \(\begin{bmatrix} 0 & 0 \\ 0 & 0.16 \end{bmatrix}\) | \(\begin{bmatrix} 0 \\ 0 \end{bmatrix}\)     | 0.01        |
-| \( f_2 \)      | \(\begin{bmatrix} 0.85 & 0.04 \\ -0.04 & 0.85 \end{bmatrix}\) | \(\begin{bmatrix} 0 \\ 1.6 \end{bmatrix}\) | 0.86        |
-| \( f_3 \)      | \(\begin{bmatrix} 0.2 & -0.26 \\ 0.23 & 0.22 \end{bmatrix}\) | \(\begin{bmatrix} 0 \\ 1.6 \end{bmatrix}\) | 0.07        |
-| \( f_4 \)      | \(\begin{bmatrix} -0.15 & 0.26 \\ 0.28 & 0.24 \end{bmatrix}\) | \(\begin{bmatrix} 0 \\ 0.44 \end{bmatrix}\) | 0.06        |
+| Transformation | Matrix                               | Translation         | Probability |
+|----------------|--------------------------------------|---------------------|-------------|
+| f₁             | [0 0; 0 0.16]                       | [0; 0]             | 0.01        |
+| f₂             | [0.85 0.04; -0.04 0.85]             | [0; 1.6]           | 0.86        |
+| f₃             | [0.2 -0.26; 0.23 0.22]              | [0; 1.6]           | 0.07        |
+| f₄             | [-0.15 0.26; 0.28 0.24]             | [0; 0.44]          | 0.06        |
 
 ## Demo
 
