@@ -146,7 +146,7 @@ const FernCanvas = () => {
 
   return (
     <>
-      <div className="flex justify-center items-center gap-10">
+      <div className="flex justify-center items-center gap-10 antialiased">
         <canvas
           ref={canvasRef}
           width={550}
@@ -171,6 +171,7 @@ const FernCanvas = () => {
                 name="iterations"
                 min={100}
                 max={10000}
+                step={100}
                 defaultValue={iteration}
                 id="range-iterations"
                 onChange={(e) => setRangeIteration(Number(e.target.value))}
@@ -187,7 +188,8 @@ const FernCanvas = () => {
                 type="range"
                 name="scale"
                 min={2.5}
-                max={102.5}
+                max={202.5}
+                step={10}
                 defaultValue={scale}
                 id="range-scale"
                 onChange={(e) => setRangeScale(Number(e.target.value))}
