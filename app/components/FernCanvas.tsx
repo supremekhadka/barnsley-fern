@@ -86,7 +86,7 @@ const FernCanvas = () => {
 
           return newPoint;
         });
-        setTimeout(() => performIterations(currentIteration - 1), 0);
+        setTimeout(() => performIterations(currentIteration - 1), 1);
       }
     };
 
