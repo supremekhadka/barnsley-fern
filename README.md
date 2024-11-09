@@ -15,4 +15,4 @@ The Barnsley fern is a well-known fractal that mimics the appearance of a natura
 
 ## Demo
 
-See the demonstration [here](https://www.barnsley-fern.vercel.app)
+See the demonstration [here](https://barnsley-fern.vercel.app)
